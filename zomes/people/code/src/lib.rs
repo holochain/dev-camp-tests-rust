@@ -27,43 +27,39 @@ use hdk::{
     AGENT_ADDRESS,
 };
 
-// see https://holochain.github.io/rust-api/0.0.1/hdk/ for info on using the hdk library
-
 #[derive(Serialize, Deserialize, Debug, DefaultJson)]
-pub struct Post {
-    content: String,
-    date_created: String,
+struct Person {
+    name: String,
 }
 
-fn handle_post_address(content: String) -> JsonString {
+#[derive(Serialize, Deserialize, Debug, DefaultJson)]
+struct AddPersonResult {
+    address: HashString,
+}
 
-    let post_entry = Entry::new(EntryType::App("post".into()), Post {
-        content,
-        date_created: "now".into(),
+fn handle_add_person(name: String) -> JsonString {
+    let person_entry = Entry::new(EntryType::App("person".into()), Person {
+        name,
     });
-
-    match hdk::entry_address(&post_entry) {
-        Ok(address) => address.into(),
+    match hdk::commit_entry(&person_entry) {
+        Ok(address) => AddPersonResult { address: address }.into(),
         Err(hdk_error) => hdk_error.into(),
     }
-
 }
 
 define_zome! {
     entries: [
         entry!(
-            name: "post",
+            name: "person",
             description: "",
             sharing: Sharing::Public,
-            native_type: Post,
-
+            native_type: Person,
             validation_package: || {
                 hdk::ValidationPackageDefinition::Entry
             },
-
-            validation: |post: Post, _ctx: hdk::ValidationData| {
-                (post.content.len() < 280)
-                    .ok_or_else(|| String::from("Content too long"))
+            validation: |person: Person, _ctx: hdk::ValidationData| {
+                (person.name.len() >= 2)
+                    .ok_or_else(|| String::from("Name must be at least 2 characters"))
             }
         )
     ]
@@ -72,14 +68,10 @@ define_zome! {
 
     functions: {
         main (Public) {
-            // the name of this function, "hash_post" is the
-            // one to give while performing a `call` method to this function.
-            // the name of the handler function must be different than the
-            // name of the Zome function.
-            hash_post: {
-                inputs: |content: String|,
-                outputs: |post: serde_json::Value|,
-                handler: handle_post_address
+            add_person: {
+                inputs: |name: String|,
+                outputs: |result: serde_json::Value|,
+                handler: handle_add_person
             }
         }
     }
