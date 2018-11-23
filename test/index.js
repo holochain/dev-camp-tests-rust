@@ -31,7 +31,7 @@ test('use validation rules to ensure that a persons name is equal to or greater 
 
 test('use the link_entries function to link two people entries', (t) => {
   const addResult = app.call("people", "main", "add_person", {
-    name: "Bonnitta"
+    name: "Vincenzo"
   })
   const result = app.call("people", "main", "link_people", {
     base: bonnittaAddress,
@@ -47,6 +47,6 @@ test('use the get_links function to return people linked from Bonnitta', (t) => 
     address: bonnittaAddress,
     tag: "is friends with"
   })
-  t.deepEqual(result, { addresses: [ "QmWyA4MpWazSQBEh7WLTLdHPFCUk31hbcacnJr87LCWR9T" ] })
+  t.deepEqual(result, { addresses: [ "QmXWHWFiuNcz5mYGAVUJkU6jsLdybZc6ZKFykC5CoC8niZ" ] })
   t.end()
 })
