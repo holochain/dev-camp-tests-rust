@@ -1,1 +1,2 @@
-# dev-camp-tests-rust
+# Learn to Build with Holochain Rust
+

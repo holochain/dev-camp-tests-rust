@@ -12,10 +12,6 @@ extern crate boolinator;
 
 use boolinator::Boolinator;
 use hdk::{
-    error::ZomeApiError,
-    holochain_wasm_utils::api_serialization::get_entry::{
-        GetEntryOptions,
-    },
     holochain_core_types::{
         dna::zome::entry_types::Sharing,
         hash::HashString,
@@ -24,7 +20,6 @@ use hdk::{
         entry::entry_type::EntryType,
         error::HolochainError,
     },
-    AGENT_ADDRESS,
 };
 
 #[derive(Serialize, Deserialize, Debug, DefaultJson)]
@@ -43,6 +38,41 @@ fn handle_add_person(name: String) -> JsonString {
     });
     match hdk::commit_entry(&person_entry) {
         Ok(address) => AddPersonResult { address: address }.into(),
+        Err(hdk_error) => hdk_error.into(),
+    }
+}
+
+fn handle_get_person(address: HashString) -> JsonString {
+    match hdk::get_entry(address) {
+        Ok(result) => result.and_then(|entry| Some(entry.serialize())).into(),
+        Err(hdk_error) => hdk_error.into(),
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug, DefaultJson)]
+struct LinkPeopleResult {
+    success: bool,
+}
+
+fn handle_link_people(base: HashString, target: HashString, tag: String) -> JsonString {
+    match hdk::link_entries(
+        &base,
+        &target,
+        tag
+    ) {
+        Ok(_) => LinkPeopleResult {success: true}.into(),
+        Err(hdk_error) => hdk_error.into(),
+    }
+}
+
+#[derive(Serialize, Deserialize, Debug, DefaultJson)]
+struct MultiAddressResult {
+    addresses: Vec<HashString>
+}
+
+fn handle_get_relationships(address: HashString, tag: String) -> JsonString {
+    match hdk::get_links(&address, tag) {
+        Ok(result) => MultiAddressResult{addresses: result.addresses().clone()}.into(),
         Err(hdk_error) => hdk_error.into(),
     }
 }
@@ -70,8 +100,23 @@ define_zome! {
         main (Public) {
             add_person: {
                 inputs: |name: String|,
-                outputs: |result: serde_json::Value|,
+                outputs: |result: JsonString|,
                 handler: handle_add_person
+            }
+            get_person: {
+                inputs: |address: HashString|,
+                outputs: |result: JsonString|,
+                handler: handle_get_person
+            }
+            link_people: {
+                inputs: |base: HashString, target: HashString, tag: String|,
+                outputs: |result: JsonString|,
+                handler: handle_link_people
+            }
+            get_relationships: {
+                inputs: |address: HashString, tag: String|,
+                outputs: |result: JsonString|,
+                handler: handle_get_relationships
             }
         }
     }
