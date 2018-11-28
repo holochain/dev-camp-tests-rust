@@ -1,8 +1,8 @@
 {
   "dependencies": {
     "@holochain/holochain-nodejs": "^0.1.22",
-    "faucet": "0.0.1",
     "json3": "*",
-    "tape": "^4.9.1"
+    "tap-spec": "^5.0.0",
+    "tape-catch": "^1.0.6"
   }
 }
