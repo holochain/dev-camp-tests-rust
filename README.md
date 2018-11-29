@@ -25,13 +25,13 @@ Change directories in your terminal this apps folder on your computer, wherever 
 If you are on Windows, open Git Bash, and run
 
 ```shell
-sh ./test.sh
+sh ./run-test.sh
 ```
 
 If you are on Mac or Linux, just run
 
 ```shell
-./test.sh
+./run-test.sh
 ```
 
 You will see that all the tests are failing.
@@ -61,12 +61,12 @@ What does this all mean?
 
 Now, open the file `/zomes/people/code/src/lib.rs` in your code editor. This will be where you will be working to solve the tests.
 
-Look for the function `add_person` in the code.
+Since you should already have taken the [tutorial](https://hackmd.io/jwdkYitQQGCJX3THfxO-2A) by this point, this activity is more self-directed. Use what you learned in the tutorial to go about adding an `add_person` function to the `define_zome!` section, and a `handle_add_person` function to the code.
 
-![add_person test](images/add-person.png)
+When it says to "use `commit_entry`" function, it means to look up the `commit_entry` function in the API reference, like this: [https://developer.holochain.org/api/0.0.2/hdk/api/fn.commit_entry.html](https://developer.holochain.org/api/0.0.2/hdk/api/fn.commit_entry.html). This will tell you how to use this function, what it does, and show you an example. Use that knowledge to write the code to make the function work as expected.
 
-When it says to "use 'commit_entry'" function, it means to look up the `commit_entry` function in the developer documention, on the [API page](https://developer.holochain.org/api/0.0.2/hdk). This will tell you how to use this function, what it does, and show you an example. Use that knowledge to write the code to make the function work as expected.
-
-When you've written the code, go back to the terminal and run `hcdev test` again. If you've succeeded, the terminal will say that only 4 tests failed, down from 6, and show this result for the first test.
+When you've written the code, go back to the terminal and run the `run-test.sh` command again, same as first instructed. If you've succeeded, the terminal will say that only 4 tests failed, down from 5, and show this result for the first test, if you scroll up to it.
 ![first-test-succeed](images/first-test-succeed.png)
+
+Repeat this for all the remaining tests one by one until they are all passing. If you get really stuck, or you've completed it and want to see the solutions, check them out in the [solution branch of this repository](https://github.com/holochain/dev-camp-tests-rust/tree/solution).
 
