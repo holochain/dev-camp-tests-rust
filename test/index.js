@@ -13,7 +13,7 @@ const bonnittaAddress = "QmWyA4MpWazSQBEh7WLTLdHPFCUk31hbcacnJr87LCWR9T"
 
 test('use the commit_entry function to add a person entry', (t) => {
   const result = app.call("people", "main", "add_person", { name: "Bonnitta" })
-  t.equal(result.address, bonnittaAddress)
+  t.deepEqual(result, { address: bonnittaAddress })
   t.end()
 })
 
@@ -38,7 +38,7 @@ test('use the link_entries function to link two people entries', (t) => {
     target: addResult.address,
     tag: "is friends with"
   })
-  t.equal(result.success, true)
+  t.deepEqual(result, { success: true })
   t.end()
 })
 
