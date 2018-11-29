@@ -65,6 +65,8 @@ Since you should already have taken the [tutorial](https://hackmd.io/jwdkYitQQGC
 
 When it says to "use `commit_entry`" function, it means to look up the `commit_entry` function in the API reference, like this: [https://developer.holochain.org/api/0.0.2/hdk/api/fn.commit_entry.html](https://developer.holochain.org/api/0.0.2/hdk/api/fn.commit_entry.html). This will tell you how to use this function, what it does, and show you an example. Use that knowledge to write the code to make the function work as expected.
 
+Whatever function or aspect is mentioned in the description of the test, that is your hint for what to look at to make it work.
+
 When you've written the code, go back to the terminal and run the `run-test.sh` command again, same as first instructed. If you've succeeded, the terminal will say that only 4 tests failed, down from 5, and show this result for the first test, if you scroll up to it.
 ![first-test-succeed](images/first-test-succeed.png)
 
