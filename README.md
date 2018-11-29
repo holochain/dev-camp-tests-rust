@@ -1,3 +1,13 @@
+# Solution
+
+Welcome to the solution branch!
+
+Here is a link to the completed [lib.rs file](zomes/people/code/src/lib.rs).
+
+Note that this is only ONE of many possible ways to have written this code, so if your code doesn't look like this, that doesn't mean that it's wrong.
+
+Congratulations on writing code that implements a minimalistic social graph!
+
 # Learn to Build with Holochain Rust
 
 This repository is a tool for learning about writing apps with Holochain.
