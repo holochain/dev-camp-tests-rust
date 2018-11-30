@@ -71,7 +71,7 @@ When it says to "use `commit_entry`" function, it means to look up the `commit_e
 
 Whatever function or aspect is mentioned in the description of the test, that is your hint for what to look at to make it work.
 
-When you've written the code, go back to the terminal and run the `run-test.sh` command again, same as first instructed. If you've succeeded, the terminal will say that only 4 tests failed, down from 5, and show this result for the first test, if you scroll up to it.
+When you've written the code, go back to the terminal and run the `run-test.sh` command again, the same as first instructed, without the command that you ran ahead of it (`cd .. etc`). If you've succeeded, the terminal will say that only 4 tests failed, down from 5, and show this result for the first test, if you scroll up to it.
 ![first-test-succeed](images/first-test-succeed.png)
 
 Repeat this for all the remaining tests one by one until they are all passing. If you get really stuck, or you've completed it and want to see the solutions, check them out in the [solution branch of this repository](https://github.com/holochain/dev-camp-tests-rust/tree/solution).
