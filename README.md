@@ -20,21 +20,25 @@ Download this repository to your computer.
 
 Open a terminal. 
 
-Change directories in your terminal this apps folder on your computer, wherever it was downloaded to. (Use or lookup `cd` command if you're not familiar)
+Change directories in your terminal this apps folder on your computer, wherever it was downloaded to. (Use or lookup `cd` command if you're not familiar).
 
-If you are on Windows, open Git Bash, and run
+You will only have to run the following command once, so run the following in your terminal.
+
+If you are on Windows, open Git Bash, and run the following two commands.
 
 ```shell
+cd test && npm install && cd ..
 sh ./run-test.sh
 ```
 
 If you are on Mac or Linux, just run
 
 ```shell
+cd test && npm install && cd ..
 ./run-test.sh
 ```
 
-You will see that all the tests are failing.
+After running the second command, you will see that all the tests are failing.
 
 ![tests failed](images/tests-failing.png)
 
