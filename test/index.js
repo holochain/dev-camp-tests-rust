@@ -10,46 +10,46 @@ const instanceAlice = Config.instance(Config.agent(aliceName), Config.dna(dnaPat
 const config = Config.conductor([instanceAlice], { debugLog: false })
 const conductor = new Conductor(config)
 conductor.start()
-const alice = conductor.makeCaller(aliceName)
 
-const bonnittaAddress = "QmWyA4MpWazSQBEh7WLTLdHPFCUk31hbcacnJr87LCWR9T"
+const bonnittaAddress = "QmbL7tDsQumvsUTDVZo5mtJknhV6bT28yZDuTdyHQdfqTs"
 
 test('use the commit_entry function to add a person entry', (t) => {
-  const result = alice.call("people", "add_person", { name: "Bonnitta" })
-  t.deepEqual(result, { address: bonnittaAddress })
+  const result = conductor.call(aliceName, "people", "add_person", { name: "Bonnitta" })
+  t.deepEqual(result, { Ok: bonnittaAddress })
   t.end()
 })
 
 test('use the get_entry function to get a person entry', (t) => {
-  const result = alice.call("people", "get_person", { address: bonnittaAddress })
-  t.deepEqual(result, { value: '{"name":"Bonnitta"}', entry_type: 'person' })
+  const result = conductor.call(aliceName, "people", "get_person", { address: bonnittaAddress })
+  t.deepEqual(result, { Ok: { App: [ 'person', '{"name":"Bonnitta"}' ] } })
   t.end()
 })
 
 test('use validation rules to ensure that a persons name is equal to or greater than 2 characters', (t) => {
-  const result = alice.call("people", "add_person", { name: "B" })
-  t.notEqual(result.error, undefined)
+  const result = conductor.call(aliceName, "people", "add_person", { name: "B" })
+  t.notEqual(result.Err, undefined)
   t.end()
 })
 
-test('use the link_entries function to link two people entries', (t) => {
-  const addResult = alice.call("people", "add_person", {
+test('use the link_entries function to link two people entries', async (t) => {
+  const addResult = await conductor.callSync(aliceName, "people", "add_person", {
     name: "Vincenzo"
   })
-  const result = alice.call("people", "link_people", {
+  const result = await conductor.callSync(aliceName, "people", "link_people", {
     base: bonnittaAddress,
-    target: addResult.address,
+    target: addResult.Ok,
     tag: "is friends with"
   })
-  t.deepEqual(result, { success: true })
+  t.deepEqual(result, { Ok: null })
   t.end()
 })
 
 test('use the get_links function to return people linked from Bonnitta', (t) => {
-  const result = alice.call("people", "get_relationships", {
+  const result = conductor.call(aliceName, "people", "get_relationships", {
     address: bonnittaAddress,
     tag: "is friends with"
   })
-  t.deepEqual(result, { addresses: [ "QmXWHWFiuNcz5mYGAVUJkU6jsLdybZc6ZKFykC5CoC8niZ" ] })
+  t.deepEqual(result, { Ok: { addresses: [ "QmPcNictUVyk9tki1TwnsZ2RzzuPYdNPoFXZReRQLUJb4X" ] } })
   t.end()
+  conductor.stop()
 })

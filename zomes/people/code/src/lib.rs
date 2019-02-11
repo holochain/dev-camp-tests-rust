@@ -7,16 +7,19 @@ extern crate serde_derive;
 extern crate serde_json;
 #[macro_use]
 extern crate holochain_core_types_derive;
+extern crate boolinator;
+use boolinator::Boolinator;
 use hdk::{
-    entry_definition::ValidatingEntryType,
-    error::ZomeApiResult,
-    holochain_wasm_utils::api_serialization::{
-        get_links::GetLinksResult,
+    holochain_core_types::{
+        dna::entry_types::Sharing,
+        json::JsonString,
+        entry::Entry,
+        error::HolochainError,
+        cas::content::Address,
     },
+    error::ZomeApiResult,
 };
-use hdk::holochain_core_types::{
-    cas::content::Address, entry::Entry, dna::entry_types::Sharing, error::HolochainError, json::JsonString,
-};
+use holochain_wasm_utils::api_serialization::get_links::GetLinksResult;
 
 define_zome! {
     entries: []
