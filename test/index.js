@@ -14,41 +14,56 @@ conductor.start()
 const bonnittaAddress = "QmbL7tDsQumvsUTDVZo5mtJknhV6bT28yZDuTdyHQdfqTs"
 
 test('use the commit_entry function to add a person entry', (t) => {
-  const result = conductor.call(aliceName, "people", "add_person", { name: "Bonnitta" })
+  let result
+  try {
+    result = conductor.call(aliceName, "people", "add_person", { name: "Bonnitta" })
+  } catch (e) {}
   t.deepEqual(result, { Ok: bonnittaAddress })
   t.end()
 })
 
 test('use the get_entry function to get a person entry', (t) => {
-  const result = conductor.call(aliceName, "people", "get_person", { address: bonnittaAddress })
+  let result
+  try {
+    result = conductor.call(aliceName, "people", "get_person", { address: bonnittaAddress })
+  } catch (e) {}
   t.deepEqual(result, { Ok: { App: [ 'person', '{"name":"Bonnitta"}' ] } })
   t.end()
 })
 
 test('use validation rules to ensure that a persons name is equal to or greater than 2 characters', (t) => {
-  const result = conductor.call(aliceName, "people", "add_person", { name: "B" })
+  let result = {}
+  try {
+    result = conductor.call(aliceName, "people", "add_person", { name: "B" })
+  } catch (e) {}
   t.notEqual(result.Err, undefined)
   t.end()
 })
 
 test('use the link_entries function to link two people entries', async (t) => {
-  const addResult = await conductor.callSync(aliceName, "people", "add_person", {
-    name: "Vincenzo"
-  })
-  const result = await conductor.callSync(aliceName, "people", "link_people", {
-    base: bonnittaAddress,
-    target: addResult.Ok,
-    tag: "is friends with"
-  })
+  let addResult, result
+  try {
+    addResult = await conductor.callSync(aliceName, "people", "add_person", {
+      name: "Vincenzo"
+    })
+    result = await conductor.callSync(aliceName, "people", "link_people", {
+      base: bonnittaAddress,
+      target: addResult.Ok,
+      tag: "is friends with"
+    })
+  } catch (e) {}
   t.deepEqual(result, { Ok: null })
   t.end()
 })
 
 test('use the get_links function to return people linked from Bonnitta', (t) => {
-  const result = conductor.call(aliceName, "people", "get_relationships", {
-    address: bonnittaAddress,
-    tag: "is friends with"
-  })
+  let result
+  try {
+    result = conductor.call(aliceName, "people", "get_relationships", {
+      address: bonnittaAddress,
+      tag: "is friends with"
+    })
+  } catch (e) {}
   t.deepEqual(result, { Ok: { addresses: [ "QmPcNictUVyk9tki1TwnsZ2RzzuPYdNPoFXZReRQLUJb4X" ] } })
   t.end()
   conductor.stop()
