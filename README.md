@@ -65,21 +65,20 @@ Next, open up a code editor like Atom, Sublime Text, or VSCode, and open this ap
 
 What does this all mean?
 - The string "use the commit_entry function to add a person entry" is a description for people to read of what the test is supposed to do
-- `app.call` is how we can actually test the exposed functions of our app
+- `conductor.call` is how we can actually test the exposed functions of our app
 - `people` is a reference to which Zome this call is to, we have one called "people"
-- `main` is 
 - `add_person` is the name of the function which this test calls
 - `{ name: "Bonnitta" }` is the value the test will pass to the function
 - `bonnittaAddress` is the value we expect calling the function to result in
-- `result.address` indicates that the result of calling our function should be an object which has on it the address property
+- `result.Ok` indicates that the result of calling our function should be an object which has on it the `Ok` property with the result
 - `t.equal` is using the test framework, "tape" to check equality. Note that `equal` can be used for simple comparisons, while `deepEqual` should be used to check the equality of objects and arrays
 - `t.end()` declares this particular test is complete
 
 Now, open the file `/zomes/people/code/src/lib.rs` in your code editor. This will be where you will be working to solve the tests.
 
-Since you should already have taken the [tutorial](https://hackmd.io/jwdkYitQQGCJX3THfxO-2A) by this point, this activity is more self-directed. Use what you learned in the tutorial to go about adding an `add_person` function to the `define_zome!` section, and a `handle_add_person` function to the code.
+Since you should already have taken the [tutorial](https://medium.com/holochain/first-steps-writing-holochain-happs-with-rust-80ae111960e) by this point, this activity is more self-directed. Use what you learned in the tutorial to go about adding an `add_person` function to the `define_zome!` section, and a `handle_add_person` function to the code.
 
-When it says to "use `commit_entry`" function, it means to look up the `commit_entry` function in the API reference, like this: [https://developer.holochain.org/api/0.0.2/hdk/api/fn.commit_entry.html](https://developer.holochain.org/api/0.0.2/hdk/api/fn.commit_entry.html). This will tell you how to use this function, what it does, and show you an example. Use that knowledge to write the code to make the function work as expected.
+When it says to "use `commit_entry`" function, it means to look up the `commit_entry` function in the API reference, like this: [https://developer.holochain.org/api/latest/hdk/api/fn.commit_entry.html](https://developer.holochain.org/api/latest/hdk/api/fn.commit_entry.html). This will tell you how to use this function, what it does, and show you an example. Use that knowledge to write the code to make the function work as expected.
 
 Whatever function or aspect is mentioned in the description of the test, that is your hint for what to look at to make it work.
 
@@ -87,4 +86,3 @@ When you've written the code, go back to the terminal and run the `run-test.sh` 
 ![first-test-succeed](images/first-test-succeed.png)
 
 Repeat this for all the remaining tests one by one until they are all passing. If you get really stuck, or you've completed it and want to see the solutions, check them out in the [solution branch of this repository](https://github.com/holochain/dev-camp-tests-rust/tree/solution).
-
