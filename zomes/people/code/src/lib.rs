@@ -28,5 +28,5 @@ define_zome! {
 
     functions: []
 
-    capabilities: {}
+    traits: {}
 }
