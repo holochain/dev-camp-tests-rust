@@ -90,6 +90,8 @@ Now, open the file `/zomes/people/code/src/lib.rs` in your code editor. This wil
 
 Since you should already have taken the [tutorial](https://medium.com/holochain/first-steps-writing-holochain-happs-with-rust-80ae111960e) by this point, this activity is more self-directed. Use what you learned in the tutorial to go about adding an `add_person` function to the `define_zome!` section, and a `handle_add_person` function to the code.
 
+> Don't forget to add the function into the `hc_public` trait, either.
+
 When it says to "use `commit_entry`" function, it means to look up the `commit_entry` function in the API reference, like this: [https://developer.holochain.org/api/latest/hdk/api/fn.commit_entry.html](https://developer.holochain.org/api/latest/hdk/api/fn.commit_entry.html). This will tell you how to use this function, what it does, and show you an example. Use that knowledge to write the code to make the function work as expected.
 
 Whatever function or aspect is mentioned in the description of the test, that is your hint for what to look at to make it work.
