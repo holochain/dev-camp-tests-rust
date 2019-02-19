@@ -10,14 +10,11 @@ extern crate holochain_core_types_derive;
 extern crate boolinator;
 use boolinator::Boolinator;
 use hdk::{
-    holochain_core_types::{
-        dna::entry_types::Sharing,
-        json::JsonString,
-        entry::Entry,
-        error::HolochainError,
-        cas::content::Address,
-    },
     error::ZomeApiResult,
+    holochain_core_types::{
+        cas::content::Address, dna::entry_types::Sharing, entry::Entry, error::HolochainError,
+        json::JsonString,
+    },
 };
 use holochain_wasm_utils::api_serialization::get_links::GetLinksResult;
 
@@ -27,13 +24,17 @@ struct Person {
 }
 
 fn handle_add_person(name: String) -> ZomeApiResult<Address> {
-    let post_entry = Entry::App("person".into(), Person {
-        name,
-    }.into());
+    let post_entry = Entry::App("person".into(), Person { name }.into());
+    hdk::commit_entry(&post_entry)
+}
 
-   let address = hdk::commit_entry(&post_entry)?;
+fn handle_update_person(address: Address, name: String) -> ZomeApiResult<Address> {
+    let post_entry = Entry::App("person".into(), Person { name }.into());
+    hdk::update_entry(post_entry, &address)
+}
 
-   Ok(address)
+fn handle_remove_person(address: Address) -> ZomeApiResult<()> {
+    hdk::remove_entry(&address)
 }
 
 fn handle_get_person(address: Address) -> ZomeApiResult<Option<Entry>> {
@@ -85,6 +86,16 @@ define_zome! {
             outputs: |result: ZomeApiResult<Address>|,
             handler: handle_add_person
         }
+        update_person: {
+            inputs: |address: Address, name: String|,
+            outputs: |result: ZomeApiResult<Address>|,
+            handler: handle_update_person
+        }
+        remove_person: {
+            inputs: |address: Address|,
+            outputs: |result: ZomeApiResult<()>|,
+            handler: handle_remove_person
+        }
         get_person: {
             inputs: |address: Address|,
             outputs: |result: ZomeApiResult<Option<Entry>>|,
@@ -102,7 +113,7 @@ define_zome! {
         }
     ]
 
-    capabilities: {
-        main (Public) [add_person, get_person, link_people, get_relationships]
+    traits: {
+        hc_public [add_person, update_person, remove_person, get_person, link_people, get_relationships]
     }
 }
