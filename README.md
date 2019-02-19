@@ -14,7 +14,7 @@ The test file is located in `test/index.js`.
 
 ## Instructions
 
-Make sure Holochain is [installed](https://developer.holochain.org/start.html)
+Make sure the Holochain command line development tools are [installed](https://developer.holochain.org/start.html#development-section)
 
 Download this repository to your computer.
 
@@ -49,18 +49,28 @@ Scroll up in your terminal so that you can see the first test. It looks like thi
 First, read the description of the test, "use the commit_entry function to add a person entry". Then, compare the "expected: " result, with the "actual: " result. They are different, and we want them to be equal. This will mean implementing the function.
 
 Next, open up a code editor like Atom, Sublime Text, or VSCode, and open this app folder as a project in your editor. From the file tree, open `/test/index.js` in your code editor. Look at the first test:
-![first test](images/first-test.png)
+
+```javascript
+const bonnittaAddress = "QmbL7tDsQumvsUTDVZo5mtJknhV6bT28yZDuTdyHQdfqTs"
+
+scenario.runTape("use the commit_entry function to add a person entry", (t, { alice }) => {
+  let result
+  try {
+    result = alice.call("people", "add_person", { name: "Bonnitta" })
+  } catch (e) {}
+  t.deepEqual(result, { Ok: bonnittaAddress })
+})
+```
 
 What does this all mean?
 - The string "use the commit_entry function to add a person entry" is a description for people to read of what the test is supposed to do
-- `conductor.call` is how we can actually test the exposed functions of our app
+- `alice.call` is how we can actually test the exposed functions of our app
 - `people` is a reference to which Zome this call is to, we have one called "people"
 - `add_person` is the name of the function which this test calls
 - `{ name: "Bonnitta" }` is the value the test will pass to the function
 - `bonnittaAddress` is the value we expect calling the function to result in
 - `result.Ok` indicates that the result of calling our function should be an object which has on it the `Ok` property with the result
 - `t.equal` is using the test framework, "tape" to check equality. Note that `equal` can be used for simple comparisons, while `deepEqual` should be used to check the equality of objects and arrays
-- `t.end()` declares this particular test is complete
 
 Now, open the file `/zomes/people/code/src/lib.rs` in your code editor. This will be where you will be working to solve the tests.
 
@@ -75,3 +85,8 @@ When you've written the code, go back to the terminal and run the `run-test.sh` 
 
 Repeat this for all the remaining tests one by one until they are all passing. If you get really stuck, or you've completed it and want to see the solutions, check them out in the [solution branch of this repository](https://github.com/holochain/dev-camp-tests-rust/tree/solution).
 
+> If you open up `run-test.sh` you will find that it has the following inside
+```shell
+hc test | test/node_modules/.bin/tap-spec
+```
+> This is the regular `hc test` command, with its' output piped through "tap-spec" which nicely formats the output. If you just run `hc test` without that you will find the results less easy to read.
