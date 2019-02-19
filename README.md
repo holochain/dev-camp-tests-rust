@@ -12,6 +12,8 @@ Congratulations on writing code that implements a minimalistic social graph!
 
 # Learn to Build with Holochain Rust
 
+> This repository is currently configured to be compatible with Holochain release v0.0.4-alpha
+
 This repository is a tool for learning about writing apps with Holochain.
 
 It uses a pattern called "test driven development" for teaching. This is where there are predefined "tests", which define how the application should behave, and which functions should exist. When you run the tests, you will see descriptions of that functionality, alongside the expected result. 
