@@ -32,12 +32,10 @@ scenario.runTape("use the update_entry function to update an existing person ent
     alice.call("people", "add_person", { name: "Bonnitta" })
     result = alice.call("people", "update_person", {
       address: bonnittaAddress,
-      newEntry: {
-        name: "Bonnie"
-      }
+      name: "Bonnie"
     })
   } catch (e) {}
-  t.deepEqual(result, { Ok: bonnittaAddress })
+  t.deepEqual(result, { Ok: "QmbfSeDtG9maHP9ZkKzBG96HAGoqL75652SC3PyUfxcBhK" })
 })
 
 scenario.runTape("use the remove_entry function to mark an existing person entry as removed", (t, { alice }) => {
@@ -49,7 +47,7 @@ scenario.runTape("use the remove_entry function to mark an existing person entry
     alice.call("people", "add_person", { name: "Bonnitta" })
     result = alice.call("people", "remove_person", { address: bonnittaAddress })
   } catch (e) {}
-  t.deepEqual(result, { Ok: bonnittaAddress })
+  t.deepEqual(result, { Ok: null })
 })
 
 scenario.runTape("use the get_entry function to retrieve a person entry", (t, { alice }) => {
@@ -72,6 +70,7 @@ scenario.runTape("use validation rules to ensure that a persons name is equal to
 scenario.runTape("use the link_entries function to link two people entries", async (t, { alice }) => {
   let addResult, result
   try {
+    await alice.callSync("people", "add_person", { name: "Bonnitta" })
     addResult = await alice.callSync("people", "add_person", {
       name: "Vincenzo"
     })
