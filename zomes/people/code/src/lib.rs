@@ -18,6 +18,7 @@ use hdk::{
     holochain_core_types::{
         cas::content::Address, dna::entry_types::Sharing, entry::Entry, error::HolochainError,
         json::JsonString,
+        validation::EntryValidationData,
     },
 };
 use holochain_wasm_utils::api_serialization::get_links::GetLinksResult;
@@ -25,7 +26,7 @@ use holochain_wasm_utils::api_serialization::get_links::GetLinksResult;
 // Defines a struct which acts as the fundamental data schema for the "person" entry type
 // EVERY struct that will be used as an entry type needs to have the following line (#[derive]...), as is,
 // implementing important functions for deserializing/serializing to and from JSON data
-#[derive(Serialize, Deserialize, Debug, DefaultJson)]
+#[derive(Serialize, Deserialize, Clone, Debug, DefaultJson)]
 struct Person {
     name: String,
 }
@@ -112,8 +113,6 @@ define_zome! {
             // whether entries of this type should get shared to the DHT or not
             // -> note that Private entries are not yet enabled, but will be soon
             sharing: Sharing::Public,
-            // a reference to the struct which defines the schema for this entry type
-            native_type: Person,
             // specify which data from the originator of an entry (during validation)
             // is needed to perform validation. In this case, just the entry itself
             validation_package: || {
@@ -125,13 +124,17 @@ define_zome! {
             // 'person' is the entry value itself, '_validation_data' is
             // extra contextual information, plus the "validation package" if it was 
             // requested, that can be used to validate against
-            validation: |person: Person, _validation_data: hdk::ValidationData| {
+            validation: |validation_data: hdk::EntryValidationData<Person>| {
                 // this line uses the 'boolinator' import to take a boolean value
                 // (person.name.len() >= 2) and convert it into a Rust "Result" type.
                 // It should provide a string if it fails validation, which will be
                 // given as the error value back to the caller
-                (person.name.len() >= 2)
-                    .ok_or_else(|| String::from("Name must be at least 2 characters"))
+                match validation_data {
+                    EntryValidationData::Create{entry:person,validation_data:_} => {
+                        (person.name.len() > 2).ok_or_else(|| String::from("Name must be at least 2 characters"))
+                    },
+                    _ => Ok(()),
+                }
             },
             links: [
                 // to! is another HDK macro, used for defining links types
@@ -146,7 +149,7 @@ define_zome! {
                         hdk::ValidationPackageDefinition::Entry
                     },
                     // similar to validation callback for an entry type
-                    validation: |_base: Address, _target: Address, _ctx: hdk::ValidationData| {
+                    validation: |_validation_data: hdk::LinkValidationData| {
                         // for now, perform no interesting validation, just return Ok
                         Ok(())
                     }

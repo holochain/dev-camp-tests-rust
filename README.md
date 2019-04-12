@@ -4,7 +4,7 @@ Welcome to the solution branch!
 
 Here is a link to the completed [lib.rs file](zomes/people/code/src/lib.rs).
 
-If you run `./run-test.sh` on this branch, all 5 tests will pass.
+If you run `./run-test.sh` on this branch, all 7 tests will pass.
 
 Note that this is only ONE of many possible ways to have written this code, so if your code doesn't look like this, that doesn't mean that it's wrong.
 
@@ -12,7 +12,7 @@ Congratulations on writing code that implements a minimalistic social graph!
 
 # Learn to Build with Holochain Rust
 
-> This repository is currently configured to be compatible with Holochain release v0.0.4-alpha
+> This repository is currently configured to be compatible with Holochain release v0.0.11-alpha1
 
 This repository is a tool for learning about writing apps with Holochain.
 
@@ -67,7 +67,7 @@ Next, open up a code editor like Atom, Sublime Text, or VSCode, and open this ap
 ```javascript
 const bonnittaAddress = "QmbL7tDsQumvsUTDVZo5mtJknhV6bT28yZDuTdyHQdfqTs"
 
-scenario.runTape("use the commit_entry function to add a person entry", (t, { alice }) => {
+scenario.runTape("use the commit_entry function to add a person entry", async (t, { alice }) => {
   let result
   try {
     result = alice.call("people", "add_person", { name: "Bonnitta" })

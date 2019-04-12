@@ -18,7 +18,7 @@ const scenario = new Scenario([instanceAlice], { debugLog: false })
 
 const bonnittaAddress = "QmbL7tDsQumvsUTDVZo5mtJknhV6bT28yZDuTdyHQdfqTs"
 
-scenario.runTape("use the commit_entry function to add a person entry", (t, { alice }) => {
+scenario.runTape("use the commit_entry function to add a person entry", async (t, { alice }) => {
   let result
   try {
     result = alice.call("people", "add_person", { name: "Bonnitta" })
@@ -26,7 +26,7 @@ scenario.runTape("use the commit_entry function to add a person entry", (t, { al
   t.deepEqual(result, { Ok: bonnittaAddress })
 })
 
-scenario.runTape("use the update_entry function to update an existing person entry", (t, { alice }) => {
+scenario.runTape("use the update_entry function to update an existing person entry", async (t, { alice }) => {
   let result
   try {
     alice.call("people", "add_person", { name: "Bonnitta" })
@@ -38,7 +38,7 @@ scenario.runTape("use the update_entry function to update an existing person ent
   t.deepEqual(result, { Ok: "QmbfSeDtG9maHP9ZkKzBG96HAGoqL75652SC3PyUfxcBhK" })
 })
 
-scenario.runTape("use the remove_entry function to mark an existing person entry as removed", (t, { alice }) => {
+scenario.runTape("use the remove_entry function to mark an existing person entry as removed", async (t, { alice }) => {
   // recall that nothing every gets deleted from the local source chain
   // because it is "append-only". Past entries are simply marked by future entries as having been removed
   // they are technically still retrievable
@@ -50,7 +50,7 @@ scenario.runTape("use the remove_entry function to mark an existing person entry
   t.deepEqual(result, { Ok: null })
 })
 
-scenario.runTape("use the get_entry function to retrieve a person entry", (t, { alice }) => {
+scenario.runTape("use the get_entry function to retrieve a person entry", async (t, { alice }) => {
   let result
   try {
     alice.call("people", "add_person", { name: "Bonnitta" })
@@ -59,7 +59,7 @@ scenario.runTape("use the get_entry function to retrieve a person entry", (t, { 
   t.deepEqual(result, { Ok: { App: [ 'person', '{"name":"Bonnitta"}' ] } })
 })
 
-scenario.runTape("use validation rules to ensure that a persons name is equal to or greater than 2 characters", (t, { alice }) => {
+scenario.runTape("use validation rules to ensure that a persons name is equal to or greater than 2 characters", async (t, { alice }) => {
   let result = {}
   try {
     result = alice.call("people", "add_person", { name: "B" })
