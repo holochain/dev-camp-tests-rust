@@ -5,7 +5,7 @@ const { Config, Scenario } = require("@holochain/holochain-nodejs")
 Scenario.setTape(require('tape-catch'))
 
 
-const dnaPath = "./dist/bundle.json"
+const dnaPath = "./dist/dev-camp-tests-rust.dna.json"
 
 // this name "alice" is important
 // it is used as a reference key in all the
@@ -14,7 +14,7 @@ const agentAlice = Config.agent("alice")
 const dna = Config.dna(dnaPath)
 const instanceAlice = Config.instance(agentAlice, dna)
 
-const scenario = new Scenario([instanceAlice], { debugLog: false })
+const scenario = new Scenario([instanceAlice], { debugLog: true })
 
 const bonnittaAddress = "QmbL7tDsQumvsUTDVZo5mtJknhV6bT28yZDuTdyHQdfqTs"
 
