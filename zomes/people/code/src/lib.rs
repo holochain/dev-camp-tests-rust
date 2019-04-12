@@ -1,3 +1,4 @@
+// import external Rust crates
 #![feature(try_from)]
 #[macro_use]
 extern crate hdk;
@@ -8,16 +9,17 @@ extern crate serde_json;
 #[macro_use]
 extern crate holochain_core_types_derive;
 extern crate boolinator;
+
+// create references for type definitions, for simpler use of externally
+// defined types within the file (Address, instead of hdk::holochain_core_types::cas::content::Address)
 use boolinator::Boolinator;
 use hdk::{
-    holochain_core_types::{
-        dna::entry_types::Sharing,
-        json::JsonString,
-        entry::Entry,
-        error::HolochainError,
-        cas::content::Address,
-    },
     error::ZomeApiResult,
+    holochain_core_types::{
+        cas::content::Address, dna::entry_types::Sharing, entry::Entry, error::HolochainError,
+        json::JsonString,
+        validation::EntryValidationData,
+    },
 };
 use holochain_wasm_utils::api_serialization::get_links::GetLinksResult;
 

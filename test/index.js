@@ -14,7 +14,7 @@ const agentAlice = Config.agent("alice")
 const dna = Config.dna(dnaPath)
 const instanceAlice = Config.instance(agentAlice, dna)
 
-const scenario = new Scenario([instanceAlice], { debugLog: true })
+const scenario = new Scenario([instanceAlice], { debugLog: false })
 
 const bonnittaAddress = "QmbL7tDsQumvsUTDVZo5mtJknhV6bT28yZDuTdyHQdfqTs"
 
