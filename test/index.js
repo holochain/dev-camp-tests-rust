@@ -5,7 +5,7 @@ const { Config, Scenario } = require("@holochain/holochain-nodejs")
 Scenario.setTape(require('tape-catch'))
 
 
-const dnaPath = "./dist/bundle.json"
+const dnaPath = "./dist/dev-camp-tests-rust.dna.json"
 
 // this name "alice" is important
 // it is used as a reference key in all the
