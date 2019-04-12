@@ -92,11 +92,11 @@ Since you should already have taken the [tutorial](https://medium.com/holochain/
 
 > Don't forget to add the function into the `hc_public` trait, either.
 
-When it says to "use `commit_entry`" function, it means to look up the `commit_entry` function in the API reference, like this: [https://developer.holochain.org/api/latest/hdk/api/fn.commit_entry.html](https://developer.holochain.org/api/latest/hdk/api/fn.commit_entry.html). This will tell you how to use this function, what it does, and show you an example. Use that knowledge to write the code to make the function work as expected.
+When it says to "use `commit_entry`" function, it means to look up the `commit_entry` function in the API reference, like this: [https://developer.holochain.org/api/0.0.11-alpha1/hdk/api/fn.commit_entry.html](https://developer.holochain.org/api/0.0.11-alpha1/hdk/api/fn.commit_entry.html). This will tell you how to use this function, what it does, and show you an example. Use that knowledge to write the code to make the function work as expected.
 
 Whatever function or aspect is mentioned in the description of the test, that is your hint for what to look at to make it work.
 
-When you've written the code, go back to the terminal and run the `run-test.sh` command again, the same as first instructed, without the command that you ran ahead of it (`cd .. etc`). If you've succeeded, the terminal will say that only 4 tests failed, down from 5, and show this result for the first test, if you scroll up to it.
+When you've written the code, go back to the terminal and run the `run-test.sh` command again, the same as first instructed, without the command that you ran ahead of it (`cd .. etc`). If you've succeeded, the terminal will say that only 6 tests failed, down from 7, and show this result for the first test, if you scroll up to it.
 ![first-test-succeed](images/first-test-succeed.png)
 
 Repeat this for all the remaining tests one by one until they are all passing. If you get really stuck, or you've completed it and want to see the solutions, check them out in the [solution branch of this repository](https://github.com/holochain/dev-camp-tests-rust/tree/solution).
