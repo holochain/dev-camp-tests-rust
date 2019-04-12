@@ -1,6 +1,6 @@
 # Learn to Build with Holochain Rust
 
-> This repository is currently configured to be compatible with Holochain release v0.0.4-alpha
+> This repository is currently configured to be compatible with Holochain release v0.0.11-alpha1
 
 This repository is a tool for learning about writing apps with Holochain.
 
