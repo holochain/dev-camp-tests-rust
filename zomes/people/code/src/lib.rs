@@ -28,5 +28,7 @@ define_zome! {
 
     functions: []
 
-    traits: {}
+    traits: {
+        hc_public []
+    }
 }
